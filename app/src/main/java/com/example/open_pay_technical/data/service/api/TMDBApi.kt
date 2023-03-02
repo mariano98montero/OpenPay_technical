@@ -22,6 +22,9 @@ interface TMDBApi {
     @GET("3/movie/top_rated")
     fun getTopRatedMovies(): Call<MovieListResponse>
 
+    @GET("3/movie/{movieId}/recommendations")
+    fun getRecommendedMovies(@Path("movieId") movieId: String): Call<MovieListResponse>
+
     @GET("3/person/{actorId}")
     fun getActorById(@Path("actorId") actorId: String): Call<ActorResponse>
 

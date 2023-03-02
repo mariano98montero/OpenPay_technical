@@ -7,6 +7,9 @@ import com.example.open_pay_technical.data.service.ServiceGenerator
 import com.example.open_pay_technical.data.mapper.MovieMapper
 import com.example.open_pay_technical.data.service.CombinedCreditsService
 import com.example.open_pay_technical.data.service.MostPopularActorService
+import com.example.open_pay_technical.data.service.PopularMoviesService
+import com.example.open_pay_technical.data.service.RecommendedMoviesService
+import com.example.open_pay_technical.data.service.TopRatedMoviesService
 import com.example.open_pay_technical.ui.movies.MoviesViewModel
 import com.example.open_pay_technical.ui.notifications.NotificationsViewModel
 import com.example.open_pay_technical.ui.profile.ProfileViewModel
@@ -30,6 +33,17 @@ object ViewModelModule {
         database = database
     )
 
-
+    @Provides
+    fun moviesViewModelProvider(
+        topRatedMoviesService: TopRatedMoviesService,
+        popularMoviesService: PopularMoviesService,
+        recommendedMoviesService: RecommendedMoviesService,
+        database: Database
+    ) = MoviesViewModel(
+        topRatedMoviesService,
+        popularMoviesService,
+        recommendedMoviesService,
+        database
+    )
 
 }

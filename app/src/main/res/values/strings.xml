@@ -12,5 +12,6 @@
     <string name="database_saved_successfully_message_text">Saved on Local!!</string>
     <string name="fragment_profile_screen_title_text">Most Popular Actor</string>
     <string name="fragment_movies_top_rated_title_text">Top Rated Movies</string>
+    <string name="fragment_movies_recommended_title_text">%1$s recommendations</string>
     <string name="fragment_movies_popular_title_text">Popular Movies</string>
 </resources>

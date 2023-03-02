@@ -4,24 +4,24 @@ import com.example.open_pay_technical.data.entity.Movie
 import com.example.open_pay_technical.data.mapper.MovieMapper
 import com.example.open_pay_technical.data.service.api.TMDBApi
 import com.example.open_pay_technical.util.Constants
-import com.example.open_pay_technical.util.Constants.POPULAR
+import com.example.open_pay_technical.util.Constants.RECOMMENDATION
 import com.example.open_pay_technical.util.Result
 import javax.inject.Inject
 
-interface PopularMoviesService {
-    fun getPopularMovies(): Result<List<Movie>>
+interface RecommendedMoviesService {
+    fun getRecommendedMovies(movieId: String): Result<List<Movie>>
 }
 
-class PopularMoviesServiceImpl @Inject constructor(
+class RecommendedMoviesServiceImpl @Inject constructor(
     private val api: ServiceGenerator,
     private val mapper: MovieMapper
-): PopularMoviesService {
-    override fun getPopularMovies(): Result<List<Movie>> {
+) : RecommendedMoviesService {
+    override fun getRecommendedMovies(movieId: String): Result<List<Movie>> {
         try {
-            val response = api.createService(TMDBApi::class.java).getPopularMovies().execute()
+            val response = api.createService(TMDBApi::class.java).getRecommendedMovies(movieId).execute()
             if (response.isSuccessful) {
                 response.body()?.let {
-                    mapper.transformToListOfMovies(it, POPULAR)
+                    mapper.transformToListOfMovies(it, RECOMMENDATION)
                 }?.let {
                     return Result.Success(it)
                 }

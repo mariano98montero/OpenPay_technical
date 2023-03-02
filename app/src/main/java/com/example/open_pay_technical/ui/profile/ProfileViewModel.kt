@@ -32,7 +32,7 @@ class ProfileViewModel @Inject constructor(
         withContext(Dispatchers.IO) { mostPopularActor.getMostPopularActors() }.let { result ->
             when (result) {
                 is Result.Success -> liveData.postValue(
-                    ProfileScreenData(state = ProfileScreenState.ACTOR_DATA_SUCCESS, actor = result.data)
+                    ProfileScreenData(state = ProfileScreenState.GET_ACTOR_DATA_SUCCESS, actor = result.data)
                 )
                 is Result.Failure -> liveData.postValue(
                     ProfileScreenData(
@@ -64,8 +64,65 @@ class ProfileViewModel @Inject constructor(
     fun saveActorOnLocal(actor: Actor) = viewModelScope.launch {
         withContext(Dispatchers.IO) { database.saveActor(actor) }.let { result ->
             when (result) {
-                is Result.Success -> liveData.postValue(ProfileScreenData(state = ProfileScreenState.ACTOR_SAVED_SUCCESS))
-                is Result.Failure -> liveData.postValue((ProfileScreenData(state = ProfileScreenState.ACTOR_SAVING_ERROR)))
+                is Result.Success -> liveData.postValue(ProfileScreenData(state = ProfileScreenState.LOCAL_SAVED_SUCCESS))
+                is Result.Failure -> liveData.postValue(
+                    ProfileScreenData(
+                        state = ProfileScreenState.ACTOR_SAVING_ERROR,
+                        exception = result.exception.message.toString()
+                    )
+                )
+            }
+        }
+    }
+
+    fun getLocalMoviesData(actorId: String) = viewModelScope.launch {
+        withContext(Dispatchers.IO) { database.getActorMovies(actorId) }.let { result ->
+            when (result) {
+                is Result.Success -> liveData.postValue(
+                    ProfileScreenData(
+                        state = ProfileScreenState.SHOW_CREDIT_MOVIES_FROM_LOCAL,
+                        movies = result.data
+                    )
+                )
+                is Result.Failure -> liveData.postValue(
+                    ProfileScreenData(
+                        state = ProfileScreenState.LOCAL_DATABASE_ERROR,
+                        exception = result.exception.message.toString()
+                    )
+                )
+            }
+        }
+    }
+
+    fun getLocalData() = viewModelScope.launch {
+        withContext(Dispatchers.IO) { database.getActor() }.let { result ->
+            when (result) {
+                is Result.Success -> liveData.postValue(
+                    ProfileScreenData(
+                        state = ProfileScreenState.INIT_WITH_LOCAL_DATA,
+                        actor = result.data
+                    )
+                )
+                is Result.Failure -> liveData.postValue(
+                    ProfileScreenData(
+                        state = ProfileScreenState.LOCAL_DATABASE_ERROR,
+                        exception = result.exception.message.toString()
+                    )
+                )
+            }
+        }
+    }
+
+    fun saveMoviesOnLocal(movies: List<Movie>, actorId: String) = viewModelScope.launch {
+        withContext(Dispatchers.IO) { database.savePopularActorMovies(movies, actorId) }.let { result ->
+            when (result) {
+                is Result.Success -> liveData.postValue(ProfileScreenData(state = ProfileScreenState.LOCAL_SAVED_SUCCESS))
+                is Result.Failure -> liveData.postValue(
+                    (ProfileScreenData(
+                        state = ProfileScreenState.LOCAL_DATABASE_ERROR,
+                        exception = result.exception.message.toString()
+                    ))
+                )
             }
         }
     }
@@ -78,10 +135,13 @@ class ProfileViewModel @Inject constructor(
     )
 
     enum class ProfileScreenState {
-        ACTOR_DATA_SUCCESS,
-        ACTOR_SAVED_SUCCESS,
+        GET_ACTOR_DATA_SUCCESS,
         ACTOR_SAVING_ERROR,
+        LOCAL_SAVED_SUCCESS,
+        LOCAL_DATABASE_ERROR,
+        INIT_WITH_LOCAL_DATA,
         SHOW_CREDIT_MOVIES,
+        SHOW_CREDIT_MOVIES_FROM_LOCAL,
         SHOW_LOADER,
         SERVICE_ERROR
     }

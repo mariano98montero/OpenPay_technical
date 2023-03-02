@@ -1,7 +1,5 @@
 package com.example.open_pay_technical.data.entity
 
-import com.example.open_pay_technical.util.SectionEnum
-
 data class Movie(
     val id: String,
     val title: String?,
@@ -10,6 +8,6 @@ data class Movie(
     val overview: String,
     val poster: String?,
     val releaseDate: String,
-    val section: SectionEnum
+    val section: String
 )
 

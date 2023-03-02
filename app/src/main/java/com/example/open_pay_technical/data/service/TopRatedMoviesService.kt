@@ -3,10 +3,9 @@ package com.example.open_pay_technical.data.service
 import com.example.open_pay_technical.data.entity.Movie
 import com.example.open_pay_technical.data.mapper.MovieMapper
 import com.example.open_pay_technical.data.service.api.TMDBApi
-import com.example.open_pay_technical.util.Constants
 import com.example.open_pay_technical.util.Constants.SERVICE_ERROR
+import com.example.open_pay_technical.util.Constants.TOP_RATED
 import com.example.open_pay_technical.util.Result
-import com.example.open_pay_technical.util.SectionEnum
 import javax.inject.Inject
 
 interface TopRatedMoviesService {
@@ -22,7 +21,7 @@ class TopRatedMoviesServiceImpl @Inject constructor(
             val response = api.createService(TMDBApi::class.java).getTopRatedMovies().execute()
             if (response.isSuccessful) {
                 response.body()?.let {
-                    mapper.transformToListOfMovies(it, SectionEnum.TOP_RATED)
+                    mapper.transformToListOfMovies(it, TOP_RATED)
                 }?.let {
                     return Result.Success(it)
                 }

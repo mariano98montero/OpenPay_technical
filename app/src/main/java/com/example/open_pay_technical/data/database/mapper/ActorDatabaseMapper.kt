@@ -12,4 +12,12 @@ class ActorDatabaseMapper {
         origin = actor.origin
     }
 
+    fun transformToActor(actorEntity: ActorEntity) = Actor(
+        id = actorEntity.id,
+        name = actorEntity.name,
+        profilePicture = actorEntity.profilePicture,
+        biography = actorEntity.biography,
+        origin = actorEntity.origin
+    )
+
 }

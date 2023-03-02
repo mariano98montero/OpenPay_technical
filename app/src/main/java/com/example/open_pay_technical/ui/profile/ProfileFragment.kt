@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.open_pay_technical.R
 import com.example.open_pay_technical.data.entity.Actor
+import com.example.open_pay_technical.data.entity.Movie
 import com.example.open_pay_technical.databinding.FragmentProfileBinding
 import com.example.open_pay_technical.ui.adapter.ProfileScreenMoviesAdapter
 import com.example.open_pay_technical.util.Constants.SERVICE_IMAGE_URL
@@ -25,6 +25,7 @@ class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
     private val moviesAdapter = ProfileScreenMoviesAdapter()
+    private lateinit var actor: Actor
 
     private val profileViewModel: ProfileViewModel by viewModels()
 
@@ -39,7 +40,7 @@ class ProfileFragment : Fragment() {
         if (context?.let { Util.isDeviceOnline(it) } == true) {
             profileViewModel.fetchInitData()
         } else {
-            profileViewModel.getData
+            profileViewModel.getLocalData()
             showExceptionDialogFragment(getString(R.string.no_internet_error_message_text))
         }
         return binding.root
@@ -47,10 +48,10 @@ class ProfileFragment : Fragment() {
 
     private fun updateUI(data: ProfileViewModel.ProfileScreenData) {
         when (data.state) {
-            ProfileViewModel.ProfileScreenState.ACTOR_DATA_SUCCESS -> {
+            ProfileViewModel.ProfileScreenState.GET_ACTOR_DATA_SUCCESS -> {
                 binding.loaderAnimation.visibility = View.GONE
                 data.actor?.let {
-                    profileViewModel.saveActorOnLocal(it)
+                    actor = it
                     profileViewModel.getCombinedCredits(it.id)
                     populateActorUI(it)
                 }
@@ -61,16 +62,24 @@ class ProfileFragment : Fragment() {
                 showExceptionDialogFragment(data.exception)
             }
             ProfileViewModel.ProfileScreenState.SHOW_CREDIT_MOVIES -> {
-                binding.profileFragmentRecyclerView.adapter = moviesAdapter
-                binding.profileFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
-                moviesAdapter.updateList(data.movies)
+                profileViewModel.saveActorOnLocal(actor)
+                profileViewModel.saveMoviesOnLocal(data.movies, actor.id)
+                populateMoviesUI(data.movies)
             }
-            ProfileViewModel.ProfileScreenState.ACTOR_SAVED_SUCCESS -> Toast.makeText(
+            ProfileViewModel.ProfileScreenState.LOCAL_SAVED_SUCCESS -> Toast.makeText(
                 context, getString(R.string.database_saved_successfully_message_text), Toast
                     .LENGTH_SHORT
             ).show()
             ProfileViewModel.ProfileScreenState.ACTOR_SAVING_ERROR -> showExceptionDialogFragment(data.exception)
             ProfileViewModel.ProfileScreenState.SHOW_LOADER -> binding.loaderAnimation.visibility = View.VISIBLE
+            ProfileViewModel.ProfileScreenState.LOCAL_DATABASE_ERROR -> showExceptionDialogFragment(data.exception)
+            ProfileViewModel.ProfileScreenState.INIT_WITH_LOCAL_DATA -> {
+                data.actor?.let {
+                    populateActorUI(it)
+                    profileViewModel.getLocalMoviesData(it.id)
+                }
+            }
+            ProfileViewModel.ProfileScreenState.SHOW_CREDIT_MOVIES_FROM_LOCAL -> populateMoviesUI(data.movies)
         }
     }
 
@@ -80,6 +89,12 @@ class ProfileFragment : Fragment() {
                 parentFragmentManager,
                 EXCEPTION_DIALOG_FRAGMENT
             )
+    }
+
+    private fun populateMoviesUI(movies: List<Movie>) {
+        binding.profileFragmentRecyclerView.adapter = moviesAdapter
+        binding.profileFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
+        moviesAdapter.updateList(movies)
     }
 
     private fun populateActorUI(actor: Actor) {

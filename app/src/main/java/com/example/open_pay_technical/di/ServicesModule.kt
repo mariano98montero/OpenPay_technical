@@ -8,6 +8,8 @@ import com.example.open_pay_technical.data.service.MostPopularActorService
 import com.example.open_pay_technical.data.service.MostPopularActorServiceImpl
 import com.example.open_pay_technical.data.service.PopularMoviesService
 import com.example.open_pay_technical.data.service.PopularMoviesServiceImpl
+import com.example.open_pay_technical.data.service.RecommendedMoviesService
+import com.example.open_pay_technical.data.service.RecommendedMoviesServiceImpl
 import com.example.open_pay_technical.data.service.ServiceGenerator
 import com.example.open_pay_technical.data.service.TopRatedMoviesService
 import com.example.open_pay_technical.data.service.TopRatedMoviesServiceImpl
@@ -48,6 +50,14 @@ object ServicesModule {
         movieMapper: MovieMapper
     ): PopularMoviesService =
         PopularMoviesServiceImpl(api = serviceGenerator, mapper = movieMapper)
+
+    @Provides
+    @Singleton
+    fun recommendedMoviesServiceProvider(
+        serviceGenerator: ServiceGenerator,
+        movieMapper: MovieMapper
+    ): RecommendedMoviesService =
+        RecommendedMoviesServiceImpl(api = serviceGenerator, mapper = movieMapper)
 
     @Provides
     @Singleton

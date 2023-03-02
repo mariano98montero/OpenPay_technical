@@ -4,13 +4,14 @@ import com.example.open_pay_technical.data.entity.Movie
 import com.example.open_pay_technical.data.service.reponse.CombinedCreditsMovieResponse
 import com.example.open_pay_technical.data.service.reponse.MovieListResponse
 import com.example.open_pay_technical.data.service.reponse.MovieResponse
-import com.example.open_pay_technical.util.Constants.MOVIE_TYPE
+import com.example.open_pay_technical.util.Constants.POPULAR_ACTOR
 import com.example.open_pay_technical.util.Constants.UNKNOWN
-import com.example.open_pay_technical.util.SectionEnum
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class MovieMapper {
 
-    private fun transform(movieResponse: MovieResponse, section: SectionEnum): Movie = movieResponse.run {
+    private fun transform(movieResponse: MovieResponse, section: String): Movie = movieResponse.run {
             Movie(
                 id = id,
                 title = title,
@@ -18,15 +19,15 @@ class MovieMapper {
                 poster = poster,
                 releaseDate = releaseDate ?: UNKNOWN,
                 overview = overview,
-                voteAverage = voteAverage,
+                voteAverage = BigDecimal(voteAverage).setScale(1, RoundingMode.HALF_EVEN).toDouble(),
                 section = section
             )
     }
 
-    fun transformToListOfMovies(movieListResponse: MovieListResponse, section: SectionEnum) =
+    fun transformToListOfMovies(movieListResponse: MovieListResponse, section: String) =
         movieListResponse.result.map { transform(it, section) }
 
-
     fun transformToListOfMovies(combinedCreditsMovieResponse: CombinedCreditsMovieResponse) =
-        combinedCreditsMovieResponse.result.map{ transform(it, SectionEnum.POPULAR_ACTOR) }
+        combinedCreditsMovieResponse.result.map{ transform(it, POPULAR_ACTOR) }
+
 }
