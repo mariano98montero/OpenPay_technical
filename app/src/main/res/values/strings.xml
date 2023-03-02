@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Open Pay Technical</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_movies">Movies</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="movies_card_vote_avg_text">%1$s Pts.</string>
+    <string name="profile_actor_biography_text">Biography: %1$s</string>
+    <string name="profile_actor_origin_text">Born in: %1$s</string>
+    <string name="profile_movie_card_overview_text">Overview: %1$s</string>
+    <string name="exception_dialog_positive_text">Okay</string>
+    <string name="no_internet_error_message_text">No Internet connection!</string>
+    <string name="database_saved_successfully_message_text">Saved on Local!!</string>
+    <string name="fragment_profile_screen_title_text">Most Popular Actor</string>
+    <string name="fragment_movies_top_rated_title_text">Top Rated Movies</string>
+    <string name="fragment_movies_popular_title_text">Popular Movies</string>
+</resources>

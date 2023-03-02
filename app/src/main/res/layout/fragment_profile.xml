@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.ProfileFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profile_fragment_popular_actor_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="@color/soft_orange"
+            android:paddingBottom="@dimen/profile_fragment_layout_padding_bottom"
+            android:paddingHorizontal="@dimen/profile_fragment_layout_padding_horizontal"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/profile_fragment_actor_screen_title_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_profile_screen_title_text"
+                android:textStyle="bold"
+                android:textSize="@dimen/large_text_size"
+                android:textAlignment="center"
+                android:padding="@dimen/profile_fragment_screen_title_padding"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/profile_fragment_actor_name_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/profile_fragment_actor_name_margin_horizontal"
+                android:textColor="@color/black"
+                android:textSize="@dimen/medium_text_size"
+                app:layout_constraintBottom_toTopOf="@id/profile_fragment_actor_biography_text_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/profile_fragment_actor_photo_image_view"
+                app:layout_constraintTop_toBottomOf="@id/profile_fragment_actor_screen_title_text_view" />
+
+            <TextView
+                android:id="@+id/profile_fragment_actor_biography_text_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/profile_fragment_actor_biography_margin_horizontal"
+                android:ellipsize="end"
+                android:textAlignment="viewStart"
+                android:textSize="@dimen/extra_small_text_size"
+                app:layout_constraintBottom_toTopOf="@id/profile_fragment_actor_origin_text_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/profile_fragment_actor_photo_image_view"
+                app:layout_constraintTop_toBottomOf="@id/profile_fragment_actor_name_text_view" />
+
+            <TextView
+                android:id="@+id/profile_fragment_actor_origin_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/profile_fragment_actor_origin_margin_horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/profile_fragment_actor_photo_image_view"
+                app:layout_constraintTop_toBottomOf="@id/profile_fragment_actor_biography_text_view" />
+
+            <ImageView
+                android:id="@+id/profile_fragment_actor_photo_image_view"
+                android:layout_width="@dimen/profile_actor_picture_size"
+                android:layout_height="@dimen/profile_actor_picture_size"
+                app:layout_constraintTop_toTopOf="@id/profile_fragment_actor_name_text_view"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/profile_fragment_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/tertiary_blue"
+        android:paddingTop="@dimen/profile_fragment_recycler_view_padding_top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_fragment_popular_actor_card_view" />
+
+    <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loader_animation"
+            android:layout_width="@dimen/generic_loader_size"
+            android:layout_height="@dimen/generic_loader_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loader" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
