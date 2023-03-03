@@ -27,7 +27,7 @@ class ImageManagerViewModel @Inject constructor(
     fun uploadImage(imageData: List<Uri>) = viewModelScope.launch {
         withContext(Dispatchers.IO){
             imageData.forEach { image ->
-                val ref: StorageReference = storage.child("/images/${UUID.randomUUID()}.jpg");
+                val ref: StorageReference = storage.child("/images/${UUID.randomUUID()}.jpg")
                 ref.putFile(image)
                     .addOnSuccessListener {
                         if (imageData.last() == image)

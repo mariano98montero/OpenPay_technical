@@ -12,11 +12,6 @@
         android:title="@string/title_movies" />
 
     <item
-        android:id="@+id/navigation_location"
-        android:icon="@drawable/ic_location_24"
-        android:title="@string/title_movies" />
-
-    <item
         android:id="@+id/navigation_images"
         android:icon="@drawable/ic_camera_24"
         android:title="@string/title_images" />

@@ -21,11 +21,9 @@ object ViewModelModule {
     fun profileViewModelProvider(
         mostPopularActorService: MostPopularActorService,
         combinedCreditsService: CombinedCreditsService,
-//        database: Database
     ) = ProfileViewModel(
         mostPopularActor = mostPopularActorService,
         combinedCreditsService = combinedCreditsService
-//        database = database
     )
 
     @Provides
@@ -33,11 +31,9 @@ object ViewModelModule {
         topRatedMoviesService: TopRatedMoviesService,
         popularMoviesService: PopularMoviesService,
         recommendedMoviesService: RecommendedMoviesService
-//        database: Database
     ) = MoviesViewModel(
         topRatedMoviesService,
         popularMoviesService,
         recommendedMoviesService
-//        database
     )
 }

@@ -21,7 +21,6 @@ import kotlinx.coroutines.withContext
 class ProfileViewModel @Inject constructor(
     private val mostPopularActor: MostPopularActorService,
     private val combinedCreditsService: CombinedCreditsService,
-//    private val database: Database
 ) : ViewModel() {
 
     private val liveData = MutableLiveData<ProfileScreenData>()
@@ -63,6 +62,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun saveActorOnLocal(actor: Actor) = viewModelScope.launch {
+        liveData.postValue(ProfileScreenData(state = ProfileScreenState.SHOW_LOADER))
         withContext(Dispatchers.IO) { Database.saveActor(actor) }.let { result ->
             when (result) {
                 is Result.Success -> liveData.postValue(ProfileScreenData(state = ProfileScreenState.LOCAL_SAVED_SUCCESS))
@@ -115,6 +115,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun saveMoviesOnLocal(movies: List<Movie>, actorId: String) = viewModelScope.launch {
+        liveData.postValue(ProfileScreenData(state = ProfileScreenState.SHOW_LOADER))
         withContext(Dispatchers.IO) { Database.savePopularActorMovies(movies, actorId) }.let { result ->
             when (result) {
                 is Result.Success -> liveData.postValue(ProfileScreenData(state = ProfileScreenState.LOCAL_SAVED_SUCCESS))

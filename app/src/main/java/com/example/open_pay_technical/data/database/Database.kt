@@ -74,7 +74,7 @@ object Database {
             }
             Result.Success(SAVE_SUCCESSFULLY)
         } catch (e: Exception) {
-            Result.Failure(Exception(e.message))
+            Result.Failure(Exception(SAVING_ERROR_MESSAGE))
         }
     }
 
@@ -97,5 +97,4 @@ object Database {
             Result.Failure(Exception(SAVING_ERROR_MESSAGE))
         }
     }
-
 }

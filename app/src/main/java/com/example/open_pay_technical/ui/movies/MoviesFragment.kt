@@ -45,10 +45,7 @@ class MoviesFragment : Fragment() {
     private fun updateUI(data: MoviesViewModel.MoviesScreenData) {
         when(data.state) {
             MoviesViewModel.MoviesScreenState.TOP_RATED_MOVIES_DATA_SUCCESS -> populateTopRatedMovies(data.movies)
-            MoviesViewModel.MoviesScreenState.MOVIES_SAVED_SUCCESS -> Toast.makeText(
-                context, getString(R.string.database_saved_successfully_message_text), Toast
-                    .LENGTH_SHORT
-            ).show()
+            MoviesViewModel.MoviesScreenState.MOVIES_SAVED_SUCCESS -> binding.loaderAnimation.visibility = View.GONE
             MoviesViewModel.MoviesScreenState.MOVIES_SAVING_ERROR -> showExceptionDialogFragment(data.exception)
             MoviesViewModel.MoviesScreenState.SHOW_LOADER -> binding.loaderAnimation.visibility = View.VISIBLE
             MoviesViewModel.MoviesScreenState.SERVICE_ERROR -> showExceptionDialogFragment(data.exception)

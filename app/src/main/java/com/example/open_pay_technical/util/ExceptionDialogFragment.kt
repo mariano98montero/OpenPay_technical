@@ -35,9 +35,9 @@ class ExceptionDialogFragment : DialogFragment() {
         fun newInstance(title: String): ExceptionDialogFragment {
             val frag: ExceptionDialogFragment = ExceptionDialogFragment()
             val args: Bundle = Bundle()
-            args.putString(EXCEPTION_DIALOG_TITLE, title);
-            frag.arguments = args;
-            return frag;
+            args.putString(EXCEPTION_DIALOG_TITLE, title)
+            frag.arguments = args
+            return frag
         }
     }
 }

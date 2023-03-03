@@ -25,7 +25,6 @@ class MoviesViewModel @Inject constructor(
     private val topRatedMoviesService: TopRatedMoviesService,
     private val popularMoviesService: PopularMoviesService,
     private val recommendedMoviesService: RecommendedMoviesService,
-//    private val database: Database
 ) : ViewModel() {
 
     private val liveData = MutableLiveData<MoviesScreenData>()
@@ -73,6 +72,7 @@ class MoviesViewModel @Inject constructor(
     }
 
     fun saveMovies(movies: List<Movie>) = viewModelScope.launch {
+        liveData.postValue(MoviesScreenData(state = MoviesScreenState.SHOW_LOADER))
         withContext(Dispatchers.IO) { Database.saveMovies(movies) }.let { result ->
             when (result) {
                 is Result.Success -> liveData.postValue(MoviesScreenData(state = MoviesScreenState.MOVIES_SAVED_SUCCESS))

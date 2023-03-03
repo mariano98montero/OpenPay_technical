@@ -22,8 +22,4 @@
         android:name="com.example.open_pay_technical.ui.images.ImageManagerFragment"
         android:label="@string/title_images"
         tools:layout="@layout/fragment_image_manager" />
-    <fragment
-        android:id="@+id/locationFragment"
-        android:name="com.example.open_pay_technical.ui.location.LocationFragment"
-        android:label="LocationFragment" />
 </navigation>

@@ -12,22 +12,22 @@ import java.math.RoundingMode
 class MovieMapper {
 
     private fun transform(movieResponse: MovieResponse, section: String): Movie = movieResponse.run {
-            Movie(
-                id = id,
-                title = title,
-                name = name,
-                poster = poster,
-                releaseDate = releaseDate ?: UNKNOWN,
-                overview = overview,
-                voteAverage = BigDecimal(voteAverage).setScale(1, RoundingMode.HALF_EVEN).toDouble(),
-                section = section
-            )
+        Movie(
+            id = id,
+            title = title,
+            name = name,
+            poster = poster,
+            releaseDate = releaseDate ?: UNKNOWN,
+            overview = overview,
+            voteAverage = BigDecimal(voteAverage).setScale(1, RoundingMode.HALF_EVEN).toDouble(),
+            section = section
+        )
     }
 
     fun transformToListOfMovies(movieListResponse: MovieListResponse, section: String) =
         movieListResponse.result.map { transform(it, section) }
 
     fun transformToListOfMovies(combinedCreditsMovieResponse: CombinedCreditsMovieResponse) =
-        combinedCreditsMovieResponse.result.map{ transform(it, POPULAR_ACTOR) }
+        combinedCreditsMovieResponse.result.map { transform(it, POPULAR_ACTOR) }
 
 }

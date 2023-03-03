@@ -31,5 +31,4 @@ interface TMDBApi {
     @GET("3/person/{actorId}/combined_credits")
     fun getCombinedCredits(@Path("actorId") actorId: String): Call<CombinedCreditsMovieResponse>
 
-
 }

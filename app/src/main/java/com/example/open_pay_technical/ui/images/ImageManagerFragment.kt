@@ -42,7 +42,7 @@ class ImageManagerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.imageManagerFragmentTakePhotoButton.setOnClickListener {
-            val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(takePicture, 0)
         }
         binding.imageManagerFragmentGetFromGalleryButton.setOnClickListener {
@@ -67,7 +67,7 @@ class ImageManagerFragment : Fragment() {
 
         if (context?.let { ContextCompat.checkSelfPermission(it, Manifest.permission.CAMERA) } == PackageManager
                 .PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(requireActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
+            ActivityCompat.requestPermissions(requireActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
     }
 
@@ -80,7 +80,6 @@ class ImageManagerFragment : Fragment() {
                             .image_manager_fragment_image_uploaded_success
                     )
                 )
-                binding.loaderAnimation.visibility = View.GONE
                 imageList = mutableListOf()
                 updateScreenImageCounter()
             }
@@ -98,6 +97,7 @@ class ImageManagerFragment : Fragment() {
     }
 
     private fun updateScreenImageCounter() {
+        binding.loaderAnimation.visibility = View.GONE
         binding.imageManagerFragmentImagesSelectedTextView.text = getString(
             R.string
                 .image_manager_images_selected_text, imageList.size.toString()

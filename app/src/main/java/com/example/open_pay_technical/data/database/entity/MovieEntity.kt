@@ -5,7 +5,7 @@ import com.example.open_pay_technical.util.Constants.EMPTY_STRING
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
 
-open class MovieEntity: RealmObject {
+open class MovieEntity : RealmObject {
     @PrimaryKey
     var id: String = EMPTY_STRING
     var actorId: String = EMPTY_STRING

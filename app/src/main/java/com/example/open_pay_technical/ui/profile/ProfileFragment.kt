@@ -66,10 +66,7 @@ class ProfileFragment : Fragment() {
                 profileViewModel.saveMoviesOnLocal(data.movies, actor.id)
                 populateMoviesUI(data.movies)
             }
-            ProfileViewModel.ProfileScreenState.LOCAL_SAVED_SUCCESS -> Toast.makeText(
-                context, getString(R.string.database_saved_successfully_message_text), Toast
-                    .LENGTH_SHORT
-            ).show()
+            ProfileViewModel.ProfileScreenState.LOCAL_SAVED_SUCCESS -> binding.loaderAnimation.visibility = View.GONE
             ProfileViewModel.ProfileScreenState.ACTOR_SAVING_ERROR -> showExceptionDialogFragment(data.exception)
             ProfileViewModel.ProfileScreenState.SHOW_LOADER -> binding.loaderAnimation.visibility = View.VISIBLE
             ProfileViewModel.ProfileScreenState.LOCAL_DATABASE_ERROR -> showExceptionDialogFragment(data.exception)
