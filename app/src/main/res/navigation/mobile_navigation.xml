@@ -18,8 +18,12 @@
         tools:layout="@layout/fragment_movies" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.open_pay_technical.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_images"
+        android:name="com.example.open_pay_technical.ui.images.ImageManagerFragment"
+        android:label="@string/title_images"
+        tools:layout="@layout/fragment_image_manager" />
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.example.open_pay_technical.ui.location.LocationFragment"
+        android:label="LocationFragment" />
 </navigation>

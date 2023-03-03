@@ -1,5 +1,6 @@
 package com.example.open_pay_technical.ui.movies
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,12 +25,12 @@ class MoviesViewModel @Inject constructor(
     private val topRatedMoviesService: TopRatedMoviesService,
     private val popularMoviesService: PopularMoviesService,
     private val recommendedMoviesService: RecommendedMoviesService,
-    private val database: Database
+//    private val database: Database
 ) : ViewModel() {
 
     private val liveData = MutableLiveData<MoviesScreenData>()
 
-    fun getLiveData(): MutableLiveData<MoviesScreenData> = liveData
+    fun getLiveData(): LiveData<MoviesScreenData> = liveData
 
     fun fetchInitData() = viewModelScope.launch {
         liveData.postValue(MoviesScreenData(state = MoviesScreenState.SHOW_LOADER))
@@ -72,7 +73,7 @@ class MoviesViewModel @Inject constructor(
     }
 
     fun saveMovies(movies: List<Movie>) = viewModelScope.launch {
-        withContext(Dispatchers.IO) { database.saveMovies(movies) }.let { result ->
+        withContext(Dispatchers.IO) { Database.saveMovies(movies) }.let { result ->
             when (result) {
                 is Result.Success -> liveData.postValue(MoviesScreenData(state = MoviesScreenState.MOVIES_SAVED_SUCCESS))
                 is Result.Failure -> liveData.postValue(
@@ -106,7 +107,7 @@ class MoviesViewModel @Inject constructor(
     }
 
     fun loadTopRatedMoviesFromLocal() = viewModelScope.launch {
-        withContext(Dispatchers.IO) { database.getMoviesBySection(TOP_RATED) }.let { result ->
+        withContext(Dispatchers.IO) { Database.getMoviesBySection(TOP_RATED) }.let { result ->
             when (result) {
                 is Result.Success -> liveData.postValue(
                     MoviesScreenData(
@@ -125,7 +126,7 @@ class MoviesViewModel @Inject constructor(
     }
 
     fun loadRecommendedMoviesFromLocal() = viewModelScope.launch {
-        withContext(Dispatchers.IO) { database.getMoviesBySection(RECOMMENDATION) }.let { result ->
+        withContext(Dispatchers.IO) { Database.getMoviesBySection(RECOMMENDATION) }.let { result ->
             when (result) {
                 is Result.Success -> liveData.postValue(
                     MoviesScreenData(
@@ -144,7 +145,7 @@ class MoviesViewModel @Inject constructor(
     }
 
     fun loadPopularMoviesFromLocal() = viewModelScope.launch {
-        withContext(Dispatchers.IO) { database.getMoviesBySection(POPULAR) }.let { result ->
+        withContext(Dispatchers.IO) { Database.getMoviesBySection(POPULAR) }.let { result ->
             when (result) {
                 is Result.Success -> liveData.postValue(
                     MoviesScreenData(

@@ -2,7 +2,12 @@ package com.example.open_pay_technical.util
 
 import android.content.Context
 import android.content.Context.CONNECTIVITY_SERVICE
+import android.graphics.Bitmap
 import android.net.ConnectivityManager
+import android.net.Uri
+import android.provider.MediaStore
+import java.io.ByteArrayOutputStream
+import java.util.UUID
 
 object Util {
 
@@ -10,5 +15,13 @@ object Util {
         val cm = context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = cm.activeNetworkInfo
         return activeNetwork != null
+    }
+
+    fun getImageUri(context: Context, image: Bitmap): Uri? {
+        val bytes = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(context.contentResolver, image, UUID.randomUUID().toString(),
+            null)
+        return Uri.parse(path)
     }
 }

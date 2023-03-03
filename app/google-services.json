@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "431387479980",
+    "project_id": "openbanktechnical",
+    "storage_bucket": "openbanktechnical.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431387479980:android:1846ee44379bff6081b409",
+        "android_client_info": {
+          "package_name": "com.example.open_pay_technical"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "431387479980-arhbq8liqirqolabno98n5sgjiitfh4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmPp3WC45TXOQOBASsxGLssSSiWzOLRgc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "431387479980-arhbq8liqirqolabno98n5sgjiitfh4k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

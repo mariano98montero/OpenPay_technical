@@ -1,5 +1,6 @@
 package com.example.open_pay_technical.ui.profile
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,12 +21,12 @@ import kotlinx.coroutines.withContext
 class ProfileViewModel @Inject constructor(
     private val mostPopularActor: MostPopularActorService,
     private val combinedCreditsService: CombinedCreditsService,
-    private val database: Database
+//    private val database: Database
 ) : ViewModel() {
 
     private val liveData = MutableLiveData<ProfileScreenData>()
 
-    fun getLiveData(): MutableLiveData<ProfileScreenData> = liveData
+    fun getLiveData(): LiveData<ProfileScreenData> = liveData
 
     fun fetchInitData() = viewModelScope.launch {
         liveData.postValue(ProfileScreenData(state = ProfileScreenState.SHOW_LOADER))
@@ -62,7 +63,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun saveActorOnLocal(actor: Actor) = viewModelScope.launch {
-        withContext(Dispatchers.IO) { database.saveActor(actor) }.let { result ->
+        withContext(Dispatchers.IO) { Database.saveActor(actor) }.let { result ->
             when (result) {
                 is Result.Success -> liveData.postValue(ProfileScreenData(state = ProfileScreenState.LOCAL_SAVED_SUCCESS))
                 is Result.Failure -> liveData.postValue(
@@ -76,7 +77,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun getLocalMoviesData(actorId: String) = viewModelScope.launch {
-        withContext(Dispatchers.IO) { database.getActorMovies(actorId) }.let { result ->
+        withContext(Dispatchers.IO) { Database.getActorMovies(actorId) }.let { result ->
             when (result) {
                 is Result.Success -> liveData.postValue(
                     ProfileScreenData(
@@ -95,7 +96,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun getLocalData() = viewModelScope.launch {
-        withContext(Dispatchers.IO) { database.getActor() }.let { result ->
+        withContext(Dispatchers.IO) { Database.getActor() }.let { result ->
             when (result) {
                 is Result.Success -> liveData.postValue(
                     ProfileScreenData(
@@ -114,7 +115,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun saveMoviesOnLocal(movies: List<Movie>, actorId: String) = viewModelScope.launch {
-        withContext(Dispatchers.IO) { database.savePopularActorMovies(movies, actorId) }.let { result ->
+        withContext(Dispatchers.IO) { Database.savePopularActorMovies(movies, actorId) }.let { result ->
             when (result) {
                 is Result.Success -> liveData.postValue(ProfileScreenData(state = ProfileScreenState.LOCAL_SAVED_SUCCESS))
                 is Result.Failure -> liveData.postValue(

@@ -2,7 +2,7 @@
     <string name="app_name">Open Pay Technical</string>
     <string name="title_profile">Profile</string>
     <string name="title_movies">Movies</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_images">Images</string>
     <string name="movies_card_vote_avg_text">%1$s Pts.</string>
     <string name="profile_actor_biography_text">Biography: %1$s</string>
     <string name="profile_actor_origin_text">Born in: %1$s</string>
@@ -14,4 +14,10 @@
     <string name="fragment_movies_top_rated_title_text">Top Rated Movies</string>
     <string name="fragment_movies_recommended_title_text">%1$s recommendations</string>
     <string name="fragment_movies_popular_title_text">Popular Movies</string>
+    <string name="image_manager_fragment_image_uploaded_success">Image Successfully uploaded!</string>
+    <string name="image_manager_fragment_image_uploaded_failed">An error has occurred</string>
+    <string name="image_manager_fragment_no_image_selected_warning">Please select at least one image.</string>
+    <string name="image_manager_fragment_take_photo_text">take photo</string>
+    <string name="image_manager_fragment_upload_photo_text">upload images</string>
+    <string name="image_manager_images_selected_text">%1$s images selected</string>
 </resources>
