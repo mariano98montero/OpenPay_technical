@@ -1,5 +1,6 @@
 package com.example.open_pay_technical.data.service
 
+import com.example.open_pay_technical.BuildConfig
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -10,7 +11,7 @@ class ServiceGenerator {
 
         val defaultHttpUrl = defaultRequest.url()
         val httpUrl = defaultHttpUrl.newBuilder()
-            .addQueryParameter(KEY, KEY_VALUE)
+            .addQueryParameter(KEY, BuildConfig.API_KEY)
             .build()
 
         val requestBuilder = defaultRequest.newBuilder().url(httpUrl)
@@ -19,7 +20,7 @@ class ServiceGenerator {
     }
 
     private val builder = Retrofit.Builder()
-        .baseUrl(TMDB_BASE_URL)
+        .baseUrl(BuildConfig.TMBD_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
 
     fun <S> createService(serviceClass: Class<S>): S {
@@ -28,8 +29,6 @@ class ServiceGenerator {
     }
 
     companion object {
-        private const val TMDB_BASE_URL = "https://api.themoviedb.org"
         private const val KEY = "api_key"
-        private const val KEY_VALUE = "dd637dbf5266764a31c8d42758244586"
     }
 }

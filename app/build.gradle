@@ -26,6 +26,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            buildConfigField 'String', 'API_KEY', '"dd637dbf5266764a31c8d42758244586"'
+
+            buildConfigField 'String', 'TMBD_BASE_URL', '"https://api.themoviedb.org"'
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -62,6 +67,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.2.2')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-storage:19.1.0'
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
 
     // Unit Test
     testImplementation 'junit:junit:4.13.2'

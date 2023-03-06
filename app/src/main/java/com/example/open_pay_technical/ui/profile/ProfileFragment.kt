@@ -13,18 +13,20 @@ import com.example.open_pay_technical.R
 import com.example.open_pay_technical.data.entity.Actor
 import com.example.open_pay_technical.data.entity.Movie
 import com.example.open_pay_technical.databinding.FragmentProfileBinding
+import com.example.open_pay_technical.ui.adapter.MovieScreenAdapter
 import com.example.open_pay_technical.ui.adapter.ProfileScreenMoviesAdapter
 import com.example.open_pay_technical.util.Constants.SERVICE_IMAGE_URL
 import com.example.open_pay_technical.util.ExceptionDialogFragment
 import com.example.open_pay_technical.util.ExceptionDialogFragment.Companion.EXCEPTION_DIALOG_FRAGMENT
 import com.example.open_pay_technical.util.Util
+import com.example.open_pay_technical.util.Util.showImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
-    private val moviesAdapter = ProfileScreenMoviesAdapter()
+    private lateinit var moviesAdapter: ProfileScreenMoviesAdapter
     private lateinit var actor: Actor
 
     private val profileViewModel: ProfileViewModel by viewModels()
@@ -89,9 +91,10 @@ class ProfileFragment : Fragment() {
     }
 
     private fun populateMoviesUI(movies: List<Movie>) {
+        moviesAdapter = ProfileScreenMoviesAdapter(movies as MutableList<Movie>)
         binding.profileFragmentRecyclerView.adapter = moviesAdapter
         binding.profileFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
-        moviesAdapter.updateList(movies)
+        moviesAdapter.submitList(movies)
     }
 
     private fun populateActorUI(actor: Actor) {
@@ -104,11 +107,7 @@ class ProfileFragment : Fragment() {
                 R.string.profile_actor_origin_text, actor.origin
             )
             context?.let {
-                Glide.with(it)
-                    .load("$SERVICE_IMAGE_URL${actor.profilePicture}")
-                    .placeholder(R.drawable.poster_placeholder)
-                    .circleCrop()
-                    .into(profileFragmentActorPhotoImageView)
+                profileFragmentActorPhotoImageView.showImage(it, actor.profilePicture)
             }
         }
     }

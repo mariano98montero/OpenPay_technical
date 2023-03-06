@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.open_pay_technical.R
@@ -11,9 +13,8 @@ import com.example.open_pay_technical.data.entity.Movie
 import com.example.open_pay_technical.databinding.FragmentProfileMovieCardViewBinding
 import com.example.open_pay_technical.util.Constants.SERVICE_IMAGE_URL
 
-class ProfileScreenMoviesAdapter : RecyclerView.Adapter<ProfileScreenMoviesAdapter.ViewHolder>() {
-
-    private val movies = mutableListOf<Movie>()
+class ProfileScreenMoviesAdapter(private val movies: MutableList<Movie>) :
+    ListAdapter<Movie, ProfileScreenMoviesAdapter.ViewHolder>(Callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(
@@ -29,10 +30,6 @@ class ProfileScreenMoviesAdapter : RecyclerView.Adapter<ProfileScreenMoviesAdapt
     }
 
     override fun getItemCount(): Int = movies.size
-
-    fun updateList(moviesList: List<Movie>) {
-        movies.addAll(moviesList)
-    }
 
     class ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
@@ -61,4 +58,16 @@ class ProfileScreenMoviesAdapter : RecyclerView.Adapter<ProfileScreenMoviesAdapt
             }
         }
     }
+}
+
+object Callback : DiffUtil.ItemCallback<Movie>() {
+
+    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        return oldItem == newItem
+    }
+
+    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        return newItem.voteAverage == oldItem.voteAverage
+    }
+
 }
